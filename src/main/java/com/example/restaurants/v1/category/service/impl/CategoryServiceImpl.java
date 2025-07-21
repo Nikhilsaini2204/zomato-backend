@@ -15,6 +15,9 @@ import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -97,13 +100,29 @@ public class CategoryServiceImpl implements CategoryService {
   @Override
   public List<DishModel> getDishesByRestaurantAndCategory(String restaurantName,
       String categoryName) {
-    RestaurantEntity restaurantEntity = restaurantRepository.findByName(restaurantName);
-    CategoryEntity categoryEntity  = categoryRepository.findByName(categoryName);
-    List<DishEntity> ls = dishRepository.findByRestaurantIdAndCategoryId(restaurantEntity.getId() , categoryEntity.getId());
-    return ls.stream()
+
+    System.out.println(restaurantName + " " + categoryName);
+
+    RestaurantEntity restaurantEntity = restaurantRepository.findByNameIgnoreCase(restaurantName);
+    if (restaurantEntity == null) {
+      return Collections.emptyList();
+    }
+
+    CategoryEntity categoryEntity = categoryRepository.findByNameIgnoreCase(categoryName);
+    if (categoryEntity == null) {
+      return Collections.emptyList();
+    }
+
+    List<DishEntity> dishes = dishRepository.findByRestaurantIdAndCategoryId(
+        restaurantEntity.getId(),
+        categoryEntity.getId()
+    );
+
+    return dishes.stream()
         .map(DishModel::new)
         .collect(Collectors.toList());
   }
+
 
 
 

@@ -9,4 +9,5 @@ public interface UserService {
   UserDTO saveUser(UserDTO userDTO);
   List<UserDTO> getUserByFilters(Long userId, String role);
   User findUserByNumber(String key);
+  UserDTO updateRole(String phone);
 }

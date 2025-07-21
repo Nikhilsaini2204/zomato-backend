@@ -28,6 +28,9 @@ public class RestaurantEntity {
   @Field("typeCuisine")
   private String typeCuisine;
 
+  @Field("ownerid")
+  private String ownerId;
+
   @Field("openingHour")
   private LocalTime openingHour;
 

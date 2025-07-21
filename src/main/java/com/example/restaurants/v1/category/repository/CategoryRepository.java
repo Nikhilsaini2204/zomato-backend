@@ -22,5 +22,5 @@ public interface CategoryRepository extends MongoRepository<CategoryEntity, Obje
   Optional<CategoryEntity> findByRestaurantIdAndNameIgnoreCase(ObjectId restaurantId, String name);
   Optional<CategoryEntity> findByRestaurantIdIsNullAndNameIgnoreCase(String name);
   List<CategoryEntity> findByType(String type); // where type is "STANDARD"
-
+  CategoryEntity findByNameIgnoreCase(String name);
 }

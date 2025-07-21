@@ -21,7 +21,7 @@ public class RestaurantServiceImpl implements RestaurantService {
   @Override
   public RestaurantModel createRestaurant(RestaurantModel restaurantModel) {
     if (restaurantRepository.existsByName(restaurantModel.getName())) {
-      return null;
+      throw new RuntimeException("Restaurant is present");
     }
 
     RestaurantEntity restaurantEntity = new RestaurantEntity();
@@ -30,6 +30,7 @@ public class RestaurantServiceImpl implements RestaurantService {
     restaurantEntity.setOpeningHour(restaurantModel.getOpeningHour());
     restaurantEntity.setClosingHour(restaurantModel.getClosingHour());
     restaurantEntity.setPhoneNumber(restaurantModel.getPhoneNumber());
+    restaurantEntity.setOwnerId(restaurantModel.getOwnerId());
     restaurantEntity.setAddress(restaurantModel.getAddress());
     restaurantEntity.setRestaurantImage(restaurantModel.getRestaurantImage());
     restaurantEntity.setTime(restaurantModel.getTime());
@@ -80,6 +81,7 @@ public class RestaurantServiceImpl implements RestaurantService {
       restaurantModel.setPhoneNumber(restaurants.getPhoneNumber());
       restaurantModel.setAddress(restaurants.getAddress());
       restaurantModel.setRestaurantImage(restaurants.getRestaurantImage());
+      restaurantModel.setOwnerId(restaurants.getOwnerId());
       restaurantModels.add(restaurantModel);
     }
 
@@ -130,7 +132,7 @@ public class RestaurantServiceImpl implements RestaurantService {
   }
   public RestaurantModel getRestaurantByName(String name){
     RestaurantEntity restaurant = restaurantRepository.findByName(name);
-    return new RestaurantModel(restaurant.getName(),restaurant.getTypeCuisine(),restaurant.getOpeningHour(),restaurant.getClosingHour(),restaurant.getPhoneNumber(),restaurant.getAddress(),restaurant.getRestaurantImage(), restaurant.isAvailable());
+    return new RestaurantModel(restaurant.getName(),restaurant.getTypeCuisine(),restaurant.getOpeningHour(),restaurant.getClosingHour(),restaurant.getPhoneNumber(),restaurant.getAddress(),restaurant.getRestaurantImage(), restaurant.isAvailable(), restaurant.getOwnerId());
   }
 }
 

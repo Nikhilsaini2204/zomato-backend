@@ -6,6 +6,7 @@ import com.example.restaurants.v1.user.entity.User;
 import com.example.restaurants.v1.user.service.UserService;
 import com.example.restaurants.v1.user.utils.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -45,6 +46,12 @@ public class UserController {
     );
 
     return ResponseEntity.ok(response);
+  }
+
+  @PostMapping("/owner")
+  public ResponseEntity<UserDTO>updateUser(@RequestParam String phone){
+    UserDTO user = userService.updateRole(phone);
+    return new ResponseEntity<>(user, HttpStatus.OK);
   }
 
   @GetMapping

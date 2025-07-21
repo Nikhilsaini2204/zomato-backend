@@ -66,7 +66,7 @@ private DishService dishService;
     return new ResponseEntity<>(ls,HttpStatus.OK);
   }
 
-  @GetMapping("/type/restaurantName")
+  @GetMapping("/restaurantName")
   public  ResponseEntity<List<CategoryModel>> getByRestaurantName(@RequestParam String restaurantName){
     List<CategoryModel> ls = categoryService.getByRestaurantName(restaurantName);
     return new ResponseEntity<>(ls,HttpStatus.OK);

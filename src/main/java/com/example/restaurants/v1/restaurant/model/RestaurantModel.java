@@ -15,6 +15,7 @@ import java.util.List;
 public class RestaurantModel {
     private String name;
     private String typeCuisine;
+    private String ownerId;
     private LocalTime openingHour;
     private LocalTime closingHour;
     private String phoneNumber;
@@ -31,6 +32,7 @@ public class RestaurantModel {
         this.openingHour = entity.getOpeningHour();
         this.closingHour = entity.getClosingHour();
         this.phoneNumber = entity.getPhoneNumber();
+        this.ownerId = entity.getOwnerId();
         this.address = entity.getAddress();
         this.restaurantImage = entity.getRestaurantImage();
         this.rating = entity.getRating();
@@ -40,7 +42,7 @@ public class RestaurantModel {
     }
 
     public RestaurantModel(String name, String typeCuisine, LocalTime openingHour, LocalTime closingHour, String phoneNumber, List<String> address, String restaurantImage,
-        boolean available) {
+        boolean available, String ownerId) {
             this.name = name;
             this.address = address;
             this.typeCuisine = typeCuisine;
@@ -49,6 +51,7 @@ public class RestaurantModel {
             this.closingHour = closingHour;
             this.phoneNumber = phoneNumber;
             this.restaurantImage = restaurantImage;
+            this.ownerId = ownerId;
     }
 }
 

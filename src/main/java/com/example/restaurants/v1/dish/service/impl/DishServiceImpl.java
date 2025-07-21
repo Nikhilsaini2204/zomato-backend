@@ -158,6 +158,7 @@ public class DishServiceImpl implements DishService {
         .map(entity -> new RestaurantModel(
             entity.getName(),
             entity.getTypeCuisine(),
+            entity.getOwnerId(),
             entity.getOpeningHour(),
             entity.getClosingHour(),
             entity.getPhoneNumber(),

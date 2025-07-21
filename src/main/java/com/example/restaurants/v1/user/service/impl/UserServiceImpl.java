@@ -69,4 +69,11 @@ public class UserServiceImpl implements UserService {
     return user;
   }
 
+  @Override
+  public UserDTO updateRole(String phone){
+    User user = userRepository.findByNumber(phone).orElseThrow(()-> new RuntimeException("User not found"));
+    user.setRole(Role.OWNER);
+    user = userRepository.save(user);
+    return new UserDTO(user);
+  }
 }
