@@ -2,6 +2,7 @@ package com.example.restaurants.v1.restaurant.controller;
 import com.example.restaurants.v1.restaurant.model.RestaurantModel;
 import com.example.restaurants.v1.restaurant.service.RestaurantService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -54,6 +55,11 @@ public class RestaurantController
     return ResponseEntity.ok(restaurantModel);
   }
 
+  @GetMapping("/owner")
+  public ResponseEntity<RestaurantModel> getRestaurantByOwner(@RequestParam String ownerId){
+    RestaurantModel restaurantModel = restaurantService.getRestaurantByOwner(ownerId);
+    return new ResponseEntity<>(restaurantModel, HttpStatus.OK);
+  }
 
   @GetMapping("/{restaurantId}/dashboard")
   public ResponseEntity<String> showDashboard(@PathVariable String restaurantId)

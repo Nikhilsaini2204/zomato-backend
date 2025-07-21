@@ -49,8 +49,8 @@ public class UserController {
   }
 
   @PostMapping("/owner")
-  public ResponseEntity<UserDTO>updateUser(@RequestParam String phone){
-    UserDTO user = userService.updateRole(phone);
+  public ResponseEntity<UserDTO>updateUser(@RequestParam String userId){
+    UserDTO user = userService.updateRole(userId);
     return new ResponseEntity<>(user, HttpStatus.OK);
   }
 

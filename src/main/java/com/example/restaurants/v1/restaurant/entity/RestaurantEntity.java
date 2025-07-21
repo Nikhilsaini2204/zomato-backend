@@ -63,4 +63,8 @@ public class RestaurantEntity {
 
   @Field("request")
   private Request request;
+
+  public String getIdAsString() {
+    return id != null ? id.toHexString() : null;
+  }
 }

@@ -13,4 +13,5 @@ public interface RestaurantService {
   RestaurantModel rejectRequestStatusByName(String name);
   List<RestaurantModel> getPendingRequests();
   RestaurantModel getRestaurantByName(String name);
+  RestaurantModel getRestaurantByOwner(String ownerId);
 }

@@ -21,10 +21,10 @@ public class GlobalExceptionHandler {
   }
 
   // Handle all other unexpected exceptions
-  @ExceptionHandler(Exception.class)
-  public ResponseEntity<Map<String, String>> handleGenericException(Exception ex) {
-    Map<String, String> response = new HashMap<>();
-    response.put("message", "An unexpected error occurred.");
-    return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
-  }
+//  @ExceptionHandler(Exception.class)
+//  public ResponseEntity<Map<String, String>> handleGenericException(Exception ex) {
+//    Map<String, String> response = new HashMap<>();
+//    response.put("message", "An unexpected error occurred.");
+//    return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+//  }
 }

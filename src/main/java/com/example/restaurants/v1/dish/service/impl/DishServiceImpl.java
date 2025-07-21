@@ -156,6 +156,7 @@ public class DishServiceImpl implements DishService {
 
     return restaurants.stream()
         .map(entity -> new RestaurantModel(
+            entity.getIdAsString(),
             entity.getName(),
             entity.getTypeCuisine(),
             entity.getOwnerId(),

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -134,5 +135,12 @@ public class RestaurantServiceImpl implements RestaurantService {
     RestaurantEntity restaurant = restaurantRepository.findByName(name);
     return new RestaurantModel(restaurant.getName(),restaurant.getTypeCuisine(),restaurant.getOpeningHour(),restaurant.getClosingHour(),restaurant.getPhoneNumber(),restaurant.getAddress(),restaurant.getRestaurantImage(), restaurant.isAvailable(), restaurant.getOwnerId());
   }
+
+  public RestaurantModel getRestaurantByOwner(String ownerId) {
+    Optional<RestaurantEntity> restaurant = restaurantRepository.findByOwnerId(ownerId);
+    return restaurant.map(RestaurantModel::new)
+        .orElseThrow(() -> new RuntimeException("No restaurant found for owner"));
+  }
+
 }
 

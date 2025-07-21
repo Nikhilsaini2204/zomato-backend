@@ -13,6 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 @Data
 public class RestaurantModel {
+  private String id;
     private String name;
     private String typeCuisine;
     private String ownerId;
@@ -27,6 +28,7 @@ public class RestaurantModel {
     private Request request;
     public RestaurantModel(RestaurantEntity entity)
     {
+        this.id = entity.getIdAsString();
         this.name = entity.getName();
         this.typeCuisine = entity.getTypeCuisine();
         this.openingHour = entity.getOpeningHour();
@@ -43,6 +45,7 @@ public class RestaurantModel {
 
     public RestaurantModel(String name, String typeCuisine, LocalTime openingHour, LocalTime closingHour, String phoneNumber, List<String> address, String restaurantImage,
         boolean available, String ownerId) {
+
             this.name = name;
             this.address = address;
             this.typeCuisine = typeCuisine;
