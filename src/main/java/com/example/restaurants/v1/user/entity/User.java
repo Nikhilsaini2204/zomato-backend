@@ -45,7 +45,7 @@ public class User {
   @Enumerated(EnumType.STRING)
   private Role role;
 
-  public User(UserDTO user){
+  public User(UserDTO user) {
     this.name = user.getName();
     this.email = user.getEmail();
     this.password = user.getPassword();

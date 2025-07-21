@@ -1,4 +1,5 @@
 package com.example.restaurants.v1.restaurant.repository;
+
 import com.example.restaurants.v1.restaurant.entity.RestaurantEntity;
 import com.example.restaurants.v1.restaurant.enums.Request;
 import com.example.restaurants.v1.restaurant.model.RestaurantModel;
@@ -11,8 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface RestaurantRepository extends MongoRepository<RestaurantEntity, ObjectId>
-{
+public interface RestaurantRepository extends MongoRepository<RestaurantEntity, ObjectId> {
   List<RestaurantEntity> findByNameContainingIgnoreCase(String name);
 
   List<RestaurantEntity> findByTypeCuisineIgnoreCase(String typeCuisine);

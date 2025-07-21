@@ -31,7 +31,7 @@ public class CategoryEntity {
   @Field("categoryImg")
   private String categoryImg;
 
-  public CategoryEntity(CategoryModel categoryModel){
+  public CategoryEntity(CategoryModel categoryModel) {
     this.categoryImg = categoryModel.getCategoryImg();
     this.type = categoryModel.getType();
     this.name = categoryModel.getName();

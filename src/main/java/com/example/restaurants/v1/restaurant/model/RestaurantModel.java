@@ -14,47 +14,48 @@ import java.util.List;
 @Data
 public class RestaurantModel {
   private String id;
-    private String name;
-    private String typeCuisine;
-    private String ownerId;
-    private LocalTime openingHour;
-    private LocalTime closingHour;
-    private String phoneNumber;
-    private Boolean isAvailable;
-    private List<String> address;
-    private String restaurantImage;
-    private Float rating;
-    private String time;
-    private Request request;
-    public RestaurantModel(RestaurantEntity entity)
-    {
-        this.id = entity.getIdAsString();
-        this.name = entity.getName();
-        this.typeCuisine = entity.getTypeCuisine();
-        this.openingHour = entity.getOpeningHour();
-        this.closingHour = entity.getClosingHour();
-        this.phoneNumber = entity.getPhoneNumber();
-        this.ownerId = entity.getOwnerId();
-        this.address = entity.getAddress();
-        this.restaurantImage = entity.getRestaurantImage();
-        this.rating = entity.getRating();
-        this.request = entity.getRequest();
-        this.time = entity.getTime();
-        this.isAvailable = entity.isAvailable();
-    }
+  private String name;
+  private String typeCuisine;
+  private String ownerId;
+  private LocalTime openingHour;
+  private LocalTime closingHour;
+  private String phoneNumber;
+  private Boolean isAvailable;
+  private List<String> address;
+  private String restaurantImage;
+  private Float rating;
+  private String time;
+  private Request request;
 
-    public RestaurantModel(String name, String typeCuisine, LocalTime openingHour, LocalTime closingHour, String phoneNumber, List<String> address, String restaurantImage,
-        boolean available, String ownerId) {
+  public RestaurantModel(RestaurantEntity entity) {
+    this.id = entity.getIdAsString();
+    this.name = entity.getName();
+    this.typeCuisine = entity.getTypeCuisine();
+    this.openingHour = entity.getOpeningHour();
+    this.closingHour = entity.getClosingHour();
+    this.phoneNumber = entity.getPhoneNumber();
+    this.ownerId = entity.getOwnerId();
+    this.address = entity.getAddress();
+    this.restaurantImage = entity.getRestaurantImage();
+    this.rating = entity.getRating();
+    this.request = entity.getRequest();
+    this.time = entity.getTime();
+    this.isAvailable = entity.isAvailable();
+  }
 
-            this.name = name;
-            this.address = address;
-            this.typeCuisine = typeCuisine;
-            this.isAvailable = available;
-            this.openingHour = openingHour;
-            this.closingHour = closingHour;
-            this.phoneNumber = phoneNumber;
-            this.restaurantImage = restaurantImage;
-            this.ownerId = ownerId;
-    }
+  public RestaurantModel(String name, String typeCuisine, LocalTime openingHour,
+      LocalTime closingHour, String phoneNumber, List<String> address, String restaurantImage,
+      boolean available, String ownerId) {
+
+    this.name = name;
+    this.address = address;
+    this.typeCuisine = typeCuisine;
+    this.isAvailable = available;
+    this.openingHour = openingHour;
+    this.closingHour = closingHour;
+    this.phoneNumber = phoneNumber;
+    this.restaurantImage = restaurantImage;
+    this.ownerId = ownerId;
+  }
 }
 

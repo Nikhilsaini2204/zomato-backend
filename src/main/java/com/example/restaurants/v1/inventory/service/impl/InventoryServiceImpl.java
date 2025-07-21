@@ -1,4 +1,5 @@
 package com.example.restaurants.v1.inventory.service.impl;
+
 import com.example.restaurants.v1.inventory.entity.InventoryEntity;
 import com.example.restaurants.v1.inventory.repository.InventoryRepository;
 import com.example.restaurants.v1.inventory.service.InventoryService;
@@ -21,6 +22,7 @@ public class InventoryServiceImpl implements InventoryService {
     InventoryEntity inventory = new InventoryEntity(null, dishId, quantity);
     return inventoryRepository.save(inventory);
   }
+
   @Override
   @Transactional
   public void deleteByDishId(String dishId) {

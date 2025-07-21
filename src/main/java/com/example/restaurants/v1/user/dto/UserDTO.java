@@ -18,7 +18,7 @@ public class UserDTO {
   private String address;
   private Role role;
 
-  public UserDTO(User user){
+  public UserDTO(User user) {
     this.id = user.getId();
     this.name = user.getName();
     this.email = user.getEmail();
@@ -28,7 +28,7 @@ public class UserDTO {
     this.role = Role.CUSTOMER;
   }
 
-  public UserDTO(Long id, String name, String email,String number,  String address, String role){
+  public UserDTO(Long id, String name, String email, String number, String address, String role) {
     this.id = id;
     this.name = name;
     this.number = number;

@@ -44,9 +44,7 @@ public class OtpController {
   public ResponseEntity<?> verifyOtp(@RequestParam String key, @RequestParam String otp) {
     boolean isValid = otpService.validateOtp(key, otp);
     if (!isValid) {
-      return ResponseEntity
-          .badRequest()
-          .body(new ApiResponse("Invalid OTP. Please try again."));
+      return ResponseEntity.badRequest().body(new ApiResponse("Invalid OTP. Please try again."));
     }
 
     // Check if user exists or create
@@ -54,8 +52,7 @@ public class OtpController {
 
     if (user == null) {
       // Return 404 with message
-      return ResponseEntity
-          .status(HttpStatus.NOT_FOUND)
+      return ResponseEntity.status(HttpStatus.NOT_FOUND)
           .body(new ApiResponse("No account found for this phone number."));
     }
     // Generate JWT token
@@ -72,9 +69,7 @@ public class OtpController {
     boolean isValid = otpService.validateOtp(key, otp);
     if (!isValid) {
       // OTP invalid
-      return ResponseEntity
-          .badRequest()
-          .body(new ApiResponse("Invalid OTP. Please try again."));
+      return ResponseEntity.badRequest().body(new ApiResponse("Invalid OTP. Please try again."));
     }
 
     // OTP valid

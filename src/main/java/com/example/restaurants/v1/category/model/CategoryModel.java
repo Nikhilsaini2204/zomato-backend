@@ -14,7 +14,8 @@ public class CategoryModel {
   private Types type;
   private String id;
   private String categoryImg;
-  public CategoryModel(CategoryEntity category){
+
+  public CategoryModel(CategoryEntity category) {
     this.type = category.getType();
     this.id = category.getId().toString();
     this.name = category.getName();

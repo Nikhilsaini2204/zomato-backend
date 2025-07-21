@@ -26,11 +26,8 @@ public class SmsService {
 
       Twilio.init(accountSid, authToken);
 
-      Message.creator(
-          new com.twilio.type.PhoneNumber("+" + phoneNumber),
-          new com.twilio.type.PhoneNumber(twilioPhoneNumber),
-          "Your OTP code is: " + otp
-      ).create();
+      Message.creator(new com.twilio.type.PhoneNumber("+" + phoneNumber),
+          new com.twilio.type.PhoneNumber(twilioPhoneNumber), "Your OTP code is: " + otp).create();
 
       System.out.println("SMS sent successfully!");
     } catch (Exception e) {

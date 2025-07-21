@@ -23,7 +23,8 @@ public class UserServiceImpl implements UserService {
   public UserDTO saveUser(UserDTO userDTO) {
     Optional<User> existingByPhone = userRepository.findByNumber(userDTO.getNumber());
     if (existingByPhone.isPresent()) {
-      throw new ResponseStatusException(HttpStatus.CONFLICT, "User with this phone number already exists");
+      throw new ResponseStatusException(HttpStatus.CONFLICT,
+          "User with this phone number already exists");
     }
 
     Optional<User> existingByEmail = userRepository.findByEmail(userDTO.getEmail());
@@ -38,30 +39,25 @@ public class UserServiceImpl implements UserService {
   }
 
 
-
   @Override
-  public List<UserDTO> getUserByFilters(Long userId, String role){
+  public List<UserDTO> getUserByFilters(Long userId, String role) {
     List<User> users;
 
     if (userId > 0 && role != null && !role.isEmpty()) {
       users = userRepository.findByIdAndRole(userId, Role.valueOf(role.toUpperCase()));
     } else if (userId > 0) {
-      users = userRepository.findById(userId)
-          .map(List::of)
-          .orElse(List.of());
+      users = userRepository.findById(userId).map(List::of).orElse(List.of());
     } else if (role != null && !role.isEmpty()) {
       users = userRepository.findByRole(Role.valueOf(role.toUpperCase()));
     } else {
       users = userRepository.findAll();
     }
 
-    return users.stream()
-        .map(UserDTO::new)
-        .toList();
+    return users.stream().map(UserDTO::new).toList();
   }
 
   @Override
-  public User findUserByNumber(String key){
+  public User findUserByNumber(String key) {
     if (key.startsWith("91")) {
       key = key.substring(2);
     }
@@ -70,9 +66,10 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public UserDTO updateRole(String userId){
+  public UserDTO updateRole(String userId) {
     Long longValue = Long.parseLong(userId);
-    User user = userRepository.findById(longValue).orElseThrow(()-> new RuntimeException("User not found"));
+    User user = userRepository.findById(longValue)
+        .orElseThrow(() -> new RuntimeException("User not found"));
     user.setRole(Role.OWNER);
     user = userRepository.save(user);
     return new UserDTO(user);

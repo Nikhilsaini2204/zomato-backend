@@ -37,8 +37,6 @@ public class DishServiceImpl implements DishService {
   private InventoryService inventoryService;
 
 
-
-
   @Override
   public DishModel addDish(DishModel dishModel, String restaurantId, String categoryId) {
     DishEntity dish = new DishEntity(dishModel);
@@ -47,7 +45,8 @@ public class DishServiceImpl implements DishService {
     dish.setRestaurantId(new ObjectId(restaurantId));
     dish.setCategoryId(new ObjectId(categoryId));
     DishEntity savedEntity = dishRepository.save(dish);
-    inventoryService.createInventory(savedEntity.getId().toHexString(), dishModel.getDailyCapacity());
+    inventoryService.createInventory(savedEntity.getId().toHexString(),
+        dishModel.getDailyCapacity());
     return new DishModel(savedEntity);
   }
 
@@ -76,17 +75,13 @@ public class DishServiceImpl implements DishService {
   @Override
   public List<DishModel> getDishByRestaurantId(String restaurantId) {
     List<DishEntity> entities = dishRepository.findByRestaurantId(new ObjectId(restaurantId));
-    return entities.stream()
-        .map(DishModel::new)
-        .collect(Collectors.toList());
+    return entities.stream().map(DishModel::new).collect(Collectors.toList());
   }
 
   @Override
   public List<DishModel> getDishByCategoryId(String categoryId) {
     List<DishEntity> entities = dishRepository.findByCategoryId(new ObjectId(categoryId));
-    return entities.stream()
-        .map(DishModel::new)
-        .collect(Collectors.toList());
+    return entities.stream().map(DishModel::new).collect(Collectors.toList());
   }
 
   @Override
@@ -98,28 +93,28 @@ public class DishServiceImpl implements DishService {
     inventoryService.deleteByDishId(id);
     return deletedDish;
   }
-//  @Override
-//  public List<DishModel> getDishesByRestaurantName(String restaurantName) {
-//    RestaurantEntity restaurant = restaurantRepository.findByName(restaurantName);
-//    List<DishEntity> dishes = dishRepository.findByRestaurantId(restaurant.getId());
-//    return dishes.stream().map(DishModel::new).collect(Collectors.toList());
-//  }
+  //  @Override
+  //  public List<DishModel> getDishesByRestaurantName(String restaurantName) {
+  //    RestaurantEntity restaurant = restaurantRepository.findByName(restaurantName);
+  //    List<DishEntity> dishes = dishRepository.findByRestaurantId(restaurant.getId());
+  //    return dishes.stream().map(DishModel::new).collect(Collectors.toList());
+  //  }
 
   @Override
   public List<DishModel> getDishesByRestaurantName(String restaurantName, String dishName) {
     RestaurantEntity restaurant = restaurantRepository.findByName(restaurantName);
 
-    if (restaurant==null) {
+    if (restaurant == null) {
       throw new RuntimeException("Restaurant not found with name: " + restaurantName);
     }
 
     List<DishEntity> dishes;
     if (dishName != null && !dishName.isBlank()) {
-        dishes = dishRepository.findByRestaurantIdAndName(restaurant.getId(), dishName);
-      } else {
-        dishes = dishRepository.findByRestaurantId(restaurant.getId());
-      }
-     return dishes.stream().map(DishModel::new).collect(Collectors.toList());
+      dishes = dishRepository.findByRestaurantIdAndName(restaurant.getId(), dishName);
+    } else {
+      dishes = dishRepository.findByRestaurantId(restaurant.getId());
+    }
+    return dishes.stream().map(DishModel::new).collect(Collectors.toList());
   }
 
 
@@ -130,13 +125,10 @@ public class DishServiceImpl implements DishService {
   }
 
   @Override
-  public List<DishModel> getDishesByCategoryName(String categoryName)
-  {
+  public List<DishModel> getDishesByCategoryName(String categoryName) {
     CategoryEntity entity = categoryRepository.findByName(categoryName);
     List<DishEntity> ls = dishRepository.findByCategoryId(entity.getId());
-    return ls.stream()
-        .map(DishModel::new)
-        .collect(Collectors.toList());
+    return ls.stream().map(DishModel::new).collect(Collectors.toList());
   }
 
   public List<RestaurantModel> getRestaurantsByCategoryName(String categoryName) {
@@ -147,31 +139,20 @@ public class DishServiceImpl implements DishService {
 
     List<DishEntity> dishes = dishRepository.findByCategoryId(category.getId());
 
-    Set<ObjectId> restaurantIds = dishes.stream()
-        .map(DishEntity::getRestaurantId)
-        .filter(Objects::nonNull)
-        .collect(Collectors.toSet());
+    Set<ObjectId> restaurantIds =
+        dishes.stream().map(DishEntity::getRestaurantId).filter(Objects::nonNull)
+            .collect(Collectors.toSet());
 
     List<RestaurantEntity> restaurants = restaurantRepository.findByIdIn(restaurantIds);
 
-    return restaurants.stream()
-        .map(entity -> new RestaurantModel(
-            entity.getIdAsString(),
-            entity.getName(),
-            entity.getTypeCuisine(),
-            entity.getOwnerId(),
-            entity.getOpeningHour(),
-            entity.getClosingHour(),
-            entity.getPhoneNumber(),
-            entity.isAvailable(),
-            entity.getAddress(),
-            entity.getRestaurantImage(),
-            entity.getRating(),
-            entity.getTime(),
-            entity.getRequest()
-        ))
-        .collect(Collectors.toList());
+    return restaurants.stream().map(
+        entity -> new RestaurantModel(entity.getIdAsString(), entity.getName(),
+            entity.getTypeCuisine(), entity.getOwnerId(), entity.getOpeningHour(),
+            entity.getClosingHour(), entity.getPhoneNumber(), entity.isAvailable(),
+            entity.getAddress(), entity.getRestaurantImage(), entity.getRating(), entity.getTime(),
+            entity.getRequest())).collect(Collectors.toList());
   }
+
   @Override
   public List<CategoryModel> getCategoriesByRestaurantName(String restaurantName) {
     RestaurantEntity restaurant = restaurantRepository.findByNameIgnoreCase(restaurantName);
@@ -185,9 +166,7 @@ public class DishServiceImpl implements DishService {
     allCategories.addAll(specificCategories);
     allCategories.addAll(standardCategories);
 
-    return allCategories.stream()
-        .map(CategoryModel::new)
-        .collect(Collectors.toList());
+    return allCategories.stream().map(CategoryModel::new).collect(Collectors.toList());
   }
 
 }

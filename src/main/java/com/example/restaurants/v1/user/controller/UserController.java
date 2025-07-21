@@ -32,24 +32,21 @@ public class UserController {
 
   @PostMapping("/create")
   public ResponseEntity<?> saveUser(@RequestBody UserDTO userDTO) {
-//    UserDTO user = userService.saveUser(userDTO);
-//    return new ResponseEntity<>(user, HttpStatus.OK);
+    //    UserDTO user = userService.saveUser(userDTO);
+    //    return new ResponseEntity<>(user, HttpStatus.OK);
     UserDTO savedUser = userService.saveUser(userDTO);
     User user = new User(savedUser);
     // Generate JWT token for the saved user
     String token = jwtUtil.generateToken(user);
 
     // Build response with token and success message
-    LoginResponseDTO response = new LoginResponseDTO(
-        token,
-        "User created successfully"
-    );
+    LoginResponseDTO response = new LoginResponseDTO(token, "User created successfully");
 
     return ResponseEntity.ok(response);
   }
 
   @PostMapping("/owner")
-  public ResponseEntity<UserDTO>updateUser(@RequestParam String userId){
+  public ResponseEntity<UserDTO> updateUser(@RequestParam String userId) {
     UserDTO user = userService.updateRole(userId);
     return new ResponseEntity<>(user, HttpStatus.OK);
   }

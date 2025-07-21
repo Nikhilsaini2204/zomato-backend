@@ -6,7 +6,7 @@ import org.bson.types.ObjectId;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class InventoryModel{
+public class InventoryModel {
   private String dishId;
   private Integer quantity;
 }

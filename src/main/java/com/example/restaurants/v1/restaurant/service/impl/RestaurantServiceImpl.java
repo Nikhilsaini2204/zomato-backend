@@ -1,4 +1,5 @@
 package com.example.restaurants.v1.restaurant.service.impl;
+
 import com.example.restaurants.v1.restaurant.entity.RestaurantEntity;
 import com.example.restaurants.v1.restaurant.enums.Request;
 import com.example.restaurants.v1.restaurant.model.RestaurantModel;
@@ -42,37 +43,33 @@ public class RestaurantServiceImpl implements RestaurantService {
     RestaurantEntity saved = restaurantRepository.save(restaurantEntity);
     return new RestaurantModel(saved);
   }
-  public List<RestaurantModel> getRestaurantByFilter(String name, String typeCuisine, Boolean isAvailable) {
-      List<RestaurantEntity> restaurant;
-      List<RestaurantModel> restaurantModels = new ArrayList<>();
-      if (name!=null && typeCuisine!=null && isAvailable!=null)
-      {
-        restaurant = restaurantRepository.findByNameContainingIgnoreCaseAndTypeCuisineIgnoreCaseAndIsAvailable(name,typeCuisine,isAvailable);
-      }
-      else if (name!=null && typeCuisine!=null)
-      {
-        restaurant = restaurantRepository.findByNameContainingIgnoreCase(name).stream().filter(r->r.getTypeCuisine().equalsIgnoreCase(typeCuisine)).toList();
-      }
-      else if (name!=null && isAvailable!=null)
-      {
-        restaurant = restaurantRepository.findByNameContainingIgnoreCase(name).stream().filter(r->r.isAvailable()== isAvailable).toList();
-      }
-      else if (typeCuisine!=null && isAvailable!=null)
-      {
-        restaurant = restaurantRepository.findByTypeCuisineIgnoreCase(typeCuisine).stream().filter(r->r.isAvailable()==isAvailable).toList();
-      }
-      else if (name != null) {
-        restaurant = restaurantRepository.findByNameContainingIgnoreCase(name);
-      }
-      else if (typeCuisine != null) {
-        restaurant = restaurantRepository.findByTypeCuisineIgnoreCase(typeCuisine);
-      }
-      else if (isAvailable != null) {
-        restaurant = restaurantRepository.findByIsAvailable(isAvailable);
-      }
-      else {
-        restaurant = restaurantRepository.findByRequest(Request.APPROVED);
-      }
+
+  public List<RestaurantModel> getRestaurantByFilter(String name, String typeCuisine,
+      Boolean isAvailable) {
+    List<RestaurantEntity> restaurant;
+    List<RestaurantModel> restaurantModels = new ArrayList<>();
+    if (name != null && typeCuisine != null && isAvailable != null) {
+      restaurant =
+          restaurantRepository.findByNameContainingIgnoreCaseAndTypeCuisineIgnoreCaseAndIsAvailable(
+              name, typeCuisine, isAvailable);
+    } else if (name != null && typeCuisine != null) {
+      restaurant = restaurantRepository.findByNameContainingIgnoreCase(name).stream()
+          .filter(r -> r.getTypeCuisine().equalsIgnoreCase(typeCuisine)).toList();
+    } else if (name != null && isAvailable != null) {
+      restaurant = restaurantRepository.findByNameContainingIgnoreCase(name).stream()
+          .filter(r -> r.isAvailable() == isAvailable).toList();
+    } else if (typeCuisine != null && isAvailable != null) {
+      restaurant = restaurantRepository.findByTypeCuisineIgnoreCase(typeCuisine).stream()
+          .filter(r -> r.isAvailable() == isAvailable).toList();
+    } else if (name != null) {
+      restaurant = restaurantRepository.findByNameContainingIgnoreCase(name);
+    } else if (typeCuisine != null) {
+      restaurant = restaurantRepository.findByTypeCuisineIgnoreCase(typeCuisine);
+    } else if (isAvailable != null) {
+      restaurant = restaurantRepository.findByIsAvailable(isAvailable);
+    } else {
+      restaurant = restaurantRepository.findByRequest(Request.APPROVED);
+    }
     for (RestaurantEntity restaurants : restaurant) {
       RestaurantModel restaurantModel = new RestaurantModel();
       restaurantModel.setName(restaurants.getName());
@@ -88,18 +85,21 @@ public class RestaurantServiceImpl implements RestaurantService {
 
     return restaurantModels;
   }
+
   public RestaurantModel getRestaurantById(String restaurantId) {
-    RestaurantEntity restaurant = restaurantRepository.findById(new ObjectId(restaurantId)).orElse(null);
+    RestaurantEntity restaurant =
+        restaurantRepository.findById(new ObjectId(restaurantId)).orElse(null);
     return new RestaurantModel(restaurant);
   }
-  public String getDashboard(String restaurantId)
-  {
+
+  public String getDashboard(String restaurantId) {
     return "Dashboard";
   }
-  public String getAnalytics(String restaurantId)
-  {
+
+  public String getAnalytics(String restaurantId) {
     return "Analytics";
   }
+
   @Override
   public RestaurantModel approveRequestStatusByName(String name) {
     RestaurantEntity restaurantEntity = restaurantRepository.findByName(name);
@@ -125,15 +125,17 @@ public class RestaurantServiceImpl implements RestaurantService {
   }
 
   public List<RestaurantModel> getPendingRequests() {
-    List<RestaurantEntity> ls =  restaurantRepository.findByRequest(Request.PENDING);
-    return restaurantRepository.findByRequest(Request.PENDING)
-        .stream()
-        .map(RestaurantModel::new)
+    List<RestaurantEntity> ls = restaurantRepository.findByRequest(Request.PENDING);
+    return restaurantRepository.findByRequest(Request.PENDING).stream().map(RestaurantModel::new)
         .collect(Collectors.toList());
   }
-  public RestaurantModel getRestaurantByName(String name){
+
+  public RestaurantModel getRestaurantByName(String name) {
     RestaurantEntity restaurant = restaurantRepository.findByName(name);
-    return new RestaurantModel(restaurant.getName(),restaurant.getTypeCuisine(),restaurant.getOpeningHour(),restaurant.getClosingHour(),restaurant.getPhoneNumber(),restaurant.getAddress(),restaurant.getRestaurantImage(), restaurant.isAvailable(), restaurant.getOwnerId());
+    return new RestaurantModel(restaurant.getName(), restaurant.getTypeCuisine(),
+        restaurant.getOpeningHour(), restaurant.getClosingHour(), restaurant.getPhoneNumber(),
+        restaurant.getAddress(), restaurant.getRestaurantImage(), restaurant.isAvailable(),
+        restaurant.getOwnerId());
   }
 
   public RestaurantModel getRestaurantByOwner(String ownerId) {

@@ -1,4 +1,3 @@
-
 package com.example.restaurants.v1.user.dto;
 
 import lombok.AllArgsConstructor;

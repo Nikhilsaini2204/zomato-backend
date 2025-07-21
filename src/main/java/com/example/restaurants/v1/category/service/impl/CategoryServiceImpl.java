@@ -32,13 +32,15 @@ public class CategoryServiceImpl implements CategoryService {
 
   @Autowired
   private DishRepository dishRepository;
+
   //if creating a standard id user shd be zomato admin - validation
   @Override
   public CategoryModel createCategorySTD(CategoryModel categoryModel) {
-    Optional<CategoryEntity> existing = categoryRepository
-        .findByRestaurantIdIsNullAndNameIgnoreCase(categoryModel.getName());
+    Optional<CategoryEntity> existing =
+        categoryRepository.findByRestaurantIdIsNullAndNameIgnoreCase(categoryModel.getName());
     if (existing.isPresent()) {
-      throw new RuntimeException("Standard category '" + categoryModel.getName() + "' already exists.");
+      throw new RuntimeException(
+          "Standard category '" + categoryModel.getName() + "' already exists.");
     }
     CategoryEntity entity = new CategoryEntity(categoryModel);
     entity.setRestaurantId(null);
@@ -49,10 +51,11 @@ public class CategoryServiceImpl implements CategoryService {
   @Override
   public CategoryModel createCategory(String restaurantId, CategoryModel categoryModel) {
     ObjectId restId = new ObjectId(restaurantId);
-    Optional<CategoryEntity>
-        existing = categoryRepository.findByRestaurantIdAndNameIgnoreCase(restId, categoryModel.getName());
+    Optional<CategoryEntity> existing =
+        categoryRepository.findByRestaurantIdAndNameIgnoreCase(restId, categoryModel.getName());
     if (existing.isPresent()) {
-      throw new RuntimeException("Category '" + categoryModel.getName() + "' already exists for this restaurant.");
+      throw new RuntimeException(
+          "Category '" + categoryModel.getName() + "' already exists for this restaurant.");
     }
     CategoryEntity entity = new CategoryEntity(categoryModel);
     entity.setRestaurantId(restId);
@@ -62,26 +65,24 @@ public class CategoryServiceImpl implements CategoryService {
 
   @Override
   public CategoryModel getById(String categoryId) {
-     CategoryEntity entity = categoryRepository.findById(new ObjectId(categoryId))
-         .orElseThrow(() -> new RuntimeException("Category not found with ID: " + categoryId));;
-    return new CategoryModel(entity) ;
+    CategoryEntity entity = categoryRepository.findById(new ObjectId(categoryId))
+        .orElseThrow(() -> new RuntimeException("Category not found with ID: " + categoryId));
+    ;
+    return new CategoryModel(entity);
   }
 
   @Override
   public List<CategoryModel> getStandardCategory() {
     List<CategoryEntity> categories = categoryRepository.findStandardCategories();
-    return categories.stream()
-        .map(CategoryModel::new)
-        .collect(Collectors.toList());
+    return categories.stream().map(CategoryModel::new).collect(Collectors.toList());
   }
 
   @Override
-  public List<CategoryModel> getCategoryByTypeAndRestaurantID( String restaurantId) {
+  public List<CategoryModel> getCategoryByTypeAndRestaurantID(String restaurantId) {
     Types type = Types.CUSTOM;
-    List<CategoryEntity> categories = categoryRepository.findByTypeAndRestaurantId(type ,new ObjectId(restaurantId));
-    return categories.stream()
-        .map(CategoryModel::new)
-        .collect(Collectors.toList());
+    List<CategoryEntity> categories =
+        categoryRepository.findByTypeAndRestaurantId(type, new ObjectId(restaurantId));
+    return categories.stream().map(CategoryModel::new).collect(Collectors.toList());
   }
 
   @Override
@@ -92,9 +93,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     List<CategoryEntity> categories = categoryRepository.findByRestaurantId(restaurant.getId());
-    return categories.stream()
-        .map(CategoryModel::new)
-        .collect(Collectors.toList());
+    return categories.stream().map(CategoryModel::new).collect(Collectors.toList());
   }
 
   @Override
@@ -113,17 +112,12 @@ public class CategoryServiceImpl implements CategoryService {
       return Collections.emptyList();
     }
 
-    List<DishEntity> dishes = dishRepository.findByRestaurantIdAndCategoryId(
-        restaurantEntity.getId(),
-        categoryEntity.getId()
-    );
+    List<DishEntity> dishes =
+        dishRepository.findByRestaurantIdAndCategoryId(restaurantEntity.getId(),
+            categoryEntity.getId());
 
-    return dishes.stream()
-        .map(DishModel::new)
-        .collect(Collectors.toList());
+    return dishes.stream().map(DishModel::new).collect(Collectors.toList());
   }
-
-
 
 
 }

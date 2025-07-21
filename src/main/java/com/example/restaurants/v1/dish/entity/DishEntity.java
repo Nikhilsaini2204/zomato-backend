@@ -55,15 +55,15 @@ public class DishEntity {
   @Field("rating")
   private float rating;
 
-   public DishEntity(DishModel dishModel){
-     this.name =dishModel.getName();
-     this.description = dishModel.getDescription();
-     this.image = dishModel.getImage();
-     this.price =dishModel.getPrice();
-     this.prepTime = dishModel.getPrepTime();
-     this.dailyCapacity = dishModel.getDailyCapacity();
-     this.isAvailable = dishModel.isAvailable();
+  public DishEntity(DishModel dishModel) {
+    this.name = dishModel.getName();
+    this.description = dishModel.getDescription();
+    this.image = dishModel.getImage();
+    this.price = dishModel.getPrice();
+    this.prepTime = dishModel.getPrepTime();
+    this.dailyCapacity = dishModel.getDailyCapacity();
+    this.isAvailable = dishModel.isAvailable();
 
-   }
+  }
 
 }
