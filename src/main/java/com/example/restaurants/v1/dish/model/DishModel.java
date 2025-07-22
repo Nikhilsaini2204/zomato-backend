@@ -9,8 +9,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class DishModel {
+  private String id;
   private String name;
   private String description;
+  private String restaurantId;
   private String image;
   private Float price;
   private boolean isAvailable;
@@ -18,9 +20,11 @@ public class DishModel {
   private int prepTime;
 
   public DishModel(DishEntity dishEntity) {
+    this.id = dishEntity.getIdAsString();
     this.name = dishEntity.getName();
     this.description = dishEntity.getDescription();
     this.image = dishEntity.getImage();
+    this.restaurantId = dishEntity.getRestaurantIdAsString();
     this.prepTime = dishEntity.getPrepTime();
     this.price = dishEntity.getPrice();
     this.isAvailable = dishEntity.isAvailable();

@@ -1,5 +1,6 @@
 package com.example.restaurants.v1.dish.controller;
 
+import com.example.restaurants.v1.category.entity.CategoryEntity;
 import com.example.restaurants.v1.category.model.CategoryModel;
 import com.example.restaurants.v1.dish.model.DishModel;
 import com.example.restaurants.v1.dish.service.DishService;
@@ -94,4 +95,9 @@ public class DishController {
     return new ResponseEntity<>(categories, HttpStatus.OK);
   }
 
+  @GetMapping("/{dishId}")
+  public ResponseEntity<DishModel> getCategoriesById(@PathVariable String dishId){
+    DishModel dish = dishService.getDishById(dishId);
+    return new ResponseEntity<>(dish, HttpStatus.OK);
+  }
 }

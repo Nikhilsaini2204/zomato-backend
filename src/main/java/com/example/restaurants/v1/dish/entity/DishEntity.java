@@ -55,6 +55,14 @@ public class DishEntity {
   @Field("rating")
   private float rating;
 
+  public String getIdAsString() {
+    return id != null ? id.toHexString() : null;
+  }
+
+  public String getRestaurantIdAsString() {
+    return restaurantId != null ? restaurantId.toHexString() : null;
+  }
+
   public DishEntity(DishModel dishModel) {
     this.name = dishModel.getName();
     this.description = dishModel.getDescription();
@@ -63,7 +71,6 @@ public class DishEntity {
     this.prepTime = dishModel.getPrepTime();
     this.dailyCapacity = dishModel.getDailyCapacity();
     this.isAvailable = dishModel.isAvailable();
-
   }
 
 }

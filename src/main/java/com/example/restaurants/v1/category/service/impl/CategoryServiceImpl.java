@@ -13,6 +13,8 @@ import com.example.restaurants.v1.restaurant.entity.RestaurantEntity;
 import com.example.restaurants.v1.restaurant.repository.RestaurantRepository;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.net.URLDecoder;
@@ -35,6 +37,7 @@ public class CategoryServiceImpl implements CategoryService {
 
   //if creating a standard id user shd be zomato admin - validation
   @Override
+  @CacheEvict(value = {"standardCategories", "categoriesByRestaurant", "dishesByRestaurantAndCategory"}, allEntries = true)
   public CategoryModel createCategorySTD(CategoryModel categoryModel) {
     Optional<CategoryEntity> existing =
         categoryRepository.findByRestaurantIdIsNullAndNameIgnoreCase(categoryModel.getName());
@@ -49,6 +52,7 @@ public class CategoryServiceImpl implements CategoryService {
   }
 
   @Override
+  @CacheEvict(value = {"categoriesByRestaurant", "dishesByRestaurantAndCategory"}, allEntries = true)
   public CategoryModel createCategory(String restaurantId, CategoryModel categoryModel) {
     ObjectId restId = new ObjectId(restaurantId);
     Optional<CategoryEntity> existing =
@@ -72,12 +76,14 @@ public class CategoryServiceImpl implements CategoryService {
   }
 
   @Override
+  @Cacheable(value = "standardCategories")
   public List<CategoryModel> getStandardCategory() {
     List<CategoryEntity> categories = categoryRepository.findStandardCategories();
     return categories.stream().map(CategoryModel::new).collect(Collectors.toList());
   }
 
   @Override
+  @Cacheable(value = "categoriesByRestaurant", key = "#restaurantId")
   public List<CategoryModel> getCategoryByTypeAndRestaurantID(String restaurantId) {
     Types type = Types.CUSTOM;
     List<CategoryEntity> categories =
@@ -86,6 +92,7 @@ public class CategoryServiceImpl implements CategoryService {
   }
 
   @Override
+  @Cacheable(value = "categoriesByRestaurant", key = "#restaurantName")
   public List<CategoryModel> getByRestaurantName(String restaurantName) {
     RestaurantEntity restaurant = restaurantRepository.findByNameIgnoreCase(restaurantName);
     if (restaurant == null) {
@@ -97,6 +104,7 @@ public class CategoryServiceImpl implements CategoryService {
   }
 
   @Override
+  @Cacheable(value = "dishesByRestaurantAndCategory", key = "#restaurantName + '_' + #categoryName")
   public List<DishModel> getDishesByRestaurantAndCategory(String restaurantName,
       String categoryName) {
 

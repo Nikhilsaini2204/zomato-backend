@@ -40,12 +40,16 @@ public class OrderEntity {
   @Field("dishes")
   private List<ObjectId> dishes;
 
+  public String getIdAsString() {
+    return id != null ? id.toHexString() : null;
+  }
+
   public OrderEntity(OrderModel orderModel){
     this.userId = orderModel.getUserId();
     this.restaurantId = new ObjectId(orderModel.getRestaurantId());
     this.amount = orderModel.getAmount();
     this.placedOn = new Date();
-    this.status = orderModel.getStatus();
+    this.status = OrderStatus.PLACED;
     this.dishes = orderModel.getDishes()
         .stream()
         .map(ObjectId::new)

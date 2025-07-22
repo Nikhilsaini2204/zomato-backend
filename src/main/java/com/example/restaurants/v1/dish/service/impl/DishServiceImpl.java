@@ -13,6 +13,8 @@ import com.example.restaurants.v1.restaurant.model.RestaurantModel;
 import com.example.restaurants.v1.restaurant.repository.RestaurantRepository;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -38,6 +40,7 @@ public class DishServiceImpl implements DishService {
 
 
   @Override
+  @CacheEvict(value = {"restaurantsByCategory", "dishesByCategory"}, allEntries = true)
   public DishModel addDish(DishModel dishModel, String restaurantId, String categoryId) {
     DishEntity dish = new DishEntity(dishModel);
     dish.setReview(List.of());
@@ -51,6 +54,7 @@ public class DishServiceImpl implements DishService {
   }
 
   @Override
+  @CacheEvict(value = {"restaurantsByCategory", "dishesByCategory"}, allEntries = true)
   public DishModel updateDish(String id, DishModel dishModel) {
     DishEntity existingDish = dishRepository.findById(new ObjectId(id))
         .orElseThrow(() -> new RuntimeException("Dish not found"));
@@ -85,6 +89,7 @@ public class DishServiceImpl implements DishService {
   }
 
   @Override
+  @CacheEvict(value = {"restaurantsByCategory", "dishesByCategory"}, allEntries = true)
   public DishModel deleteByDishId(String id) {
     DishEntity dish = dishRepository.findById(new ObjectId(id))
         .orElseThrow(() -> new RuntimeException("Dish not found with ID: " + id));
@@ -102,7 +107,7 @@ public class DishServiceImpl implements DishService {
 
   @Override
   public List<DishModel> getDishesByRestaurantName(String restaurantName, String dishName) {
-    RestaurantEntity restaurant = restaurantRepository.findByName(restaurantName);
+    RestaurantEntity restaurant = restaurantRepository.findByNameIgnoreCase(restaurantName);
 
     if (restaurant == null) {
       throw new RuntimeException("Restaurant not found with name: " + restaurantName);
@@ -125,12 +130,14 @@ public class DishServiceImpl implements DishService {
   }
 
   @Override
+  @Cacheable(value = "dishesByCategory", key = "#categoryName")
   public List<DishModel> getDishesByCategoryName(String categoryName) {
     CategoryEntity entity = categoryRepository.findByName(categoryName);
     List<DishEntity> ls = dishRepository.findByCategoryId(entity.getId());
     return ls.stream().map(DishModel::new).collect(Collectors.toList());
   }
 
+  @Cacheable(value = "restaurantsByCategory", key = "#categoryName")
   public List<RestaurantModel> getRestaurantsByCategoryName(String categoryName) {
     CategoryEntity category = categoryRepository.findByName(categoryName);
     if (category == null) {

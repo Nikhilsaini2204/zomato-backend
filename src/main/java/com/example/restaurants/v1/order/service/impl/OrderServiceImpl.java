@@ -2,13 +2,11 @@ package com.example.restaurants.v1.order.service.impl;
 
 import com.example.restaurants.v1.order.entity.OrderEntity;
 import com.example.restaurants.v1.order.enums.OrderStatus;
-import com.example.restaurants.v1.order.model.OrderStatusUpdateEvent;
 import com.example.restaurants.v1.order.model.OrderModel;
 import com.example.restaurants.v1.order.repository.OrderRepository;
 import com.example.restaurants.v1.order.service.OrderService;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.stereotype.Service;
 
 import java.util.List;

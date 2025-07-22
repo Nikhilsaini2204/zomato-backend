@@ -88,7 +88,7 @@ public class RestaurantServiceImpl implements RestaurantService {
 
   public RestaurantModel getRestaurantById(String restaurantId) {
     RestaurantEntity restaurant =
-        restaurantRepository.findById(new ObjectId(restaurantId)).orElse(null);
+        restaurantRepository.findById(new ObjectId(restaurantId)).orElseThrow(()->new RuntimeException("Restaurant not found"));
     return new RestaurantModel(restaurant);
   }
 

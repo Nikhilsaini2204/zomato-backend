@@ -6,8 +6,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.bson.types.ObjectId;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.util.Date;
 import java.util.List;
@@ -17,6 +15,7 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 @AllArgsConstructor
 public class OrderModel {
+  private String id;
   private String userId;
   private String restaurantId;
   private float amount;
@@ -25,6 +24,7 @@ public class OrderModel {
   private List<String> dishes;
 
   public OrderModel(OrderEntity orderEntity){
+    this.id = orderEntity.getIdAsString();
     this.userId = orderEntity.getUserId();
     this.restaurantId = orderEntity.getRestaurantId().toString();
     this.amount = orderEntity.getAmount();
