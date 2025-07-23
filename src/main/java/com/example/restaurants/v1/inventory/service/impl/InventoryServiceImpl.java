@@ -29,5 +29,11 @@ public class InventoryServiceImpl implements InventoryService {
     inventoryRepository.deleteByDishId(dishId);
   }
 
-
+  public int getAvailableQuantity(String dishId) {
+    InventoryEntity inventory = inventoryRepository.findByDishId(dishId);
+    if (inventory == null) {
+      throw new RuntimeException("Inventory not found for dish ID: " + dishId);
+    }
+    return inventory.getQuantity();
+  }
 }

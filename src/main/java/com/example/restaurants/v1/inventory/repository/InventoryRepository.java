@@ -9,7 +9,7 @@ import java.util.List;
 
 @Repository
 public interface InventoryRepository extends JpaRepository<InventoryEntity, Long> {
-  List<InventoryEntity> findByDishId(String dishId);
-
+  //List<InventoryEntity> findByDishId(String dishId);
+  InventoryEntity findByDishId(String dishId);
   void deleteByDishId(String dishId);
 }

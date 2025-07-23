@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface InventoryService {
   InventoryEntity createInventory(String dishId, int quantity);
-
+  int getAvailableQuantity(String dishId);
   void deleteByDishId(String dishId);
 }
 

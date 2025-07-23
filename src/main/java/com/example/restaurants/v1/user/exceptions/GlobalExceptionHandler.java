@@ -28,4 +28,30 @@ public class GlobalExceptionHandler {
   //    response.put("message", "An unexpected error occurred.");
   //    return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
   //  }
+
+  @ExceptionHandler(RuntimeException.class)
+  public ResponseEntity<ErrorResponse> handleRuntimeException(RuntimeException ex) {
+    // Log full stack trace on server (optional)
+    ex.printStackTrace();
+
+    // Send only the message to client
+    ErrorResponse errorResponse = new ErrorResponse(ex.getMessage());
+    return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+  }
+
+  public static class ErrorResponse {
+    private String message;
+
+    public ErrorResponse(String message) {
+      this.message = message;
+    }
+
+    public String getMessage() {
+      return message;
+    }
+
+    public void setMessage(String message) {
+      this.message = message;
+    }
+  }
 }
